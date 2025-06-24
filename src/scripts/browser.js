@@ -291,6 +291,20 @@ browser.tizen = userAgent.toLowerCase().indexOf('tizen') !== -1 || window.tizen 
 browser.vidaa = userAgent.toLowerCase().includes('vidaa');
 browser.web0s = isWeb0s();
 browser.edgeUwp = browser.edge && (userAgent.toLowerCase().indexOf('msapphost') !== -1 || userAgent.toLowerCase().indexOf('webview') !== -1);
+if (browser.edgeChromium) {
+    // WebView2 uses Client Hints to store its platform
+    if (navigator.userAgentData) {
+        for (const brand in navigator.userAgentData.brands) {
+            if (brand.toLowerCase().indexOf('webview2') !== -1) {
+                browser.edgeWebView2 = true;
+            }
+        }
+        browser.xboxOne = navigator.userAgentData.model?.toLowerCase() === 'xbox';
+    } else {
+        //        // Client hints only works on localhost or over HTTPS. Rely on client manually adding webview2 to UA in other cases.
+        browser.edgeWebView2 = userAgent.toLowerCase().indexOf('webview2') !== -1;
+    }
+}
 
 if (browser.web0s) {
     browser.web0sVersion = web0sVersion(browser);
