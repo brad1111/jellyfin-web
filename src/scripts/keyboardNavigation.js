@@ -142,6 +142,11 @@ export function enable() {
             return;
         }
 
+        // Ignore undefined keyDown events on Edge UWP WebView2 as they can duplicate events from gamepadtokey.
+        if (browser.xboxOne && e.key == 'Unidentified') {
+            return;
+        }
+
         let capture = true;
 
         switch (key) {
