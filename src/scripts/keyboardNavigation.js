@@ -244,7 +244,8 @@ function attachGamepadScript() {
 }
 
 // No need to check for gamepads manually at load time, the eventhandler will be fired for that
-if (navigator.getGamepads && appSettings.enableGamepad()) {
+// Xbox needs gamepad support enabled to function
+if (navigator.getGamepads && (appSettings.enableGamepad() || browser.xboxOne)) {
     window.addEventListener('gamepadconnected', attachGamepadScript);
 }
 
